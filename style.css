@@ -1,0 +1,147 @@
+# 🌿 ZenStudy — Tu bienestar estudiantil
+
+Aplicación web de bienestar para estudiantes con interfaz moderna, suave y relajante. Diseñada para reducir el estrés, mejorar la productividad y promover hábitos saludables durante el estudio.
+
+---
+
+## ✅ Funcionalidades implementadas
+
+### 🏠 Inicio
+- Saludo personalizado según hora del día y nombre del perfil
+- Selector de estado emocional (6 opciones con emoji)
+- Control deslizante de nivel de estrés (1–10) con color dinámico
+- Selector de ubicación actual
+- Selector de tiempo libre disponible
+- Botón "Obtener recomendación" con sugerencias personalizadas según estado/estrés/lugar
+
+### 📅 Calendario
+- Vista semanal de Lunes a Domingo
+- Navegación entre semanas (anterior / siguiente)
+- Agregar eventos con tipo, día, hora inicio/fin y descripción
+- Tipos: Clases, Academia, Inglés, Descanso, Sueño, Recordatorio, Alarma, Pausa activa
+- Código de colores por tipo de evento
+- Eliminar eventos con confirmación
+- Leyenda de categorías
+
+### ⏱️ Temporizador Pomodoro
+- Modos: Estudio 25min / Descanso corto 5min / Descanso largo 15min / Personalizado
+- Timer personalizado (minutos de estudio y descanso configurables)
+- Círculo de progreso SVG animado
+- Botones: Iniciar / Pausar / Reiniciar / Saltar
+- Cambio automático entre fase estudio ↔ descanso
+- Contador de pomodoros completados (persiste en localStorage)
+- Estadísticas de sesión: minutos estudiados, descansos, pomodoros
+
+### 🌬️ Relajación
+- 4 ejercicios de respiración guiada:
+  - Respiración cuadrada (4-4-4-4)
+  - Técnica 4-7-8
+  - Respiración profunda (5-6)
+  - Escaneo corporal (4-2-6-3)
+- Círculo visual animado que se expande/contrae según la fase
+- Cuenta regresiva por fase
+- Contador de ciclos completados
+- 4 pausas activas rápidas (cuello, hombros, ojos, espalda)
+
+### 🎵 Música & Sonidos
+- **Sonidos ambientales** generados con Web Audio API:
+  - 🌧️ Lluvia, 🌊 Mar (con oleaje), 🌲 Bosque (con trinos), 📻 Ruido blanco, 🔥 Chimenea, ☕ Café
+  - Control de volumen individual por sonido
+  - Animación de ondas mientras suena
+- **Música de Minecraft** (síntesis de tonos suaves):
+  - Sweden, Wet Hands, Calm, Living Mice, Minecraft, Subwoofer Lullaby
+  - Mini reproductor con control de pausa/stop
+
+### 🔔 Notificaciones
+- 8 notificaciones predefinidas configurables: estudiar, descanso, agua (x2), tarde, pausa activa, dormir, encuesta diaria
+- Hora personalizable por cada notificación
+- Toggle de activar/desactivar individual
+- Solicitud de permiso al navegador para notificaciones nativas
+- Verificador in-app (cada minuto) con toast automático
+- Historial de notificaciones recientes
+
+### 📊 Progreso / Encuesta
+- Encuesta diaria con: estado emocional, nivel de estrés, qué ayudó, qué no ayudó, nota adicional
+- Guarda hasta 90 días de datos
+- Actualiza si ya existe encuesta del día
+- Gráfico de línea (Chart.js) de evolución del estrés — últimos 7 días
+- Insights automáticos: promedio, actividad más útil, alertas
+
+### ⚙️ Perfil
+- Datos: nombre, edad, carrera/nivel, ciudad, avatar (8 opciones)
+- Actividades más efectivas (análisis de encuestas)
+- Historial emocional últimos 7 días
+- Estadísticas: días registrados, estrés promedio, pomodoros totales
+- Exportar todos los datos como JSON
+- Borrar todos los datos
+
+---
+
+## 📂 Estructura del proyecto
+
+```
+index.html          → Estructura HTML + todas las pestañas
+css/
+  style.css         → Estilos completos (variables, componentes, responsive)
+js/
+  app.js            → Toda la lógica JavaScript
+README.md           → Esta documentación
+```
+
+---
+
+## 🗄️ Almacenamiento de datos
+
+Toda la información se guarda en `localStorage` del navegador con prefijo `zs_`:
+
+| Clave               | Descripción                      |
+|---------------------|----------------------------------|
+| `zs_profile`        | Nombre, edad, carrera, ciudad, avatar |
+| `zs_surveyData`     | Array de encuestas diarias       |
+| `zs_calendarEvents` | Eventos del calendario           |
+| `zs_notifItems`     | Configuración de notificaciones  |
+| `zs_pomodoroCount`  | Total de pomodoros completados   |
+| `zs_notifHistory`   | Historial de notificaciones      |
+| `zs_today`          | Estado del día actual (inicio)   |
+
+---
+
+## 🎨 Paleta de colores
+
+| Variable       | Color               | Uso                  |
+|----------------|---------------------|----------------------|
+| `--bg`         | `#f7f5f2` blanco cálido | Fondo principal  |
+| `--sage`       | `#7a9e7e` verde salvia | Primario, botones |
+| `--blue`       | `#7fa8c9` azul suave | Secundario, relajación |
+| `--amber`      | `#d4a04a` dorado    | Estrés medio         |
+| `--danger`     | `#e07070` rojo suave | Alertas, estrés alto |
+| `--lavender`   | `#a89bc9` lavanda   | Exhale en respiración |
+
+---
+
+## 🚀 Funcionalidades pendientes / próximos pasos
+
+1. **Integración de audio real**: Cargar archivos MP3 reales para los sonidos y música de Minecraft
+2. **Sincronización en la nube**: Conectar con una API para sincronizar datos entre dispositivos
+3. **Modo offline (PWA)**: Service Worker para funcionamiento sin internet
+4. **Notificaciones push**: Backend para enviar notificaciones cuando la app esté cerrada
+5. **Temas de color**: Modo oscuro y otros esquemas de colores
+6. **Calendario en vista mensual**: Ampliar el calendario a vista mensual
+7. **Metas semanales**: Sistema de objetivos y logros
+8. **Técnicas de estudio adicionales**: Feynman, Mind Mapping, etc.
+9. **Integración con Google Calendar**: Importar/exportar eventos
+
+---
+
+## 🌐 Ruta principal
+
+- **`/`** → `index.html` — Aplicación completa (SPA con pestañas)
+
+---
+
+## 📦 Librerías externas (CDN)
+
+- [Nunito Font](https://fonts.google.com/specimen/Nunito) — Tipografía principal
+- [Font Awesome 6.4](https://fontawesome.com/) — Iconos
+- [Chart.js](https://www.chartjs.org/) — Gráficos de progreso
+- Web Audio API — Sonidos ambientales y música (nativa del navegador)
