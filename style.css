@@ -1,147 +1,1431 @@
-# 🌿 ZenStudy — Tu bienestar estudiantil
+/* ============================================================
+   ZENSTUDY — Hoja de estilos principal
+   Paleta: blanco cálido, gris claro, verde salvia, azul suave
+   ============================================================ */
 
-Aplicación web de bienestar para estudiantes con interfaz moderna, suave y relajante. Diseñada para reducir el estrés, mejorar la productividad y promover hábitos saludables durante el estudio.
+/* ── Variables de diseño ── */
+:root {
+  --bg:          #f7f5f2;         /* blanco cálido */
+  --surface:     #ffffff;
+  --surface-2:   #f0ede8;
+  --border:      #e4e0d9;
+  --text:        #3a3530;
+  --text-2:      #7a736a;
+  --text-3:      #afa89f;
 
----
+  --sage:        #7a9e7e;         /* verde salvia */
+  --sage-light:  #c4d9c5;
+  --sage-dark:   #5b7d60;
 
-## ✅ Funcionalidades implementadas
+  --blue:        #7fa8c9;         /* azul suave */
+  --blue-light:  #d0e4f0;
+  --blue-dark:   #5b85a8;
 
-### 🏠 Inicio
-- Saludo personalizado según hora del día y nombre del perfil
-- Selector de estado emocional (6 opciones con emoji)
-- Control deslizante de nivel de estrés (1–10) con color dinámico
-- Selector de ubicación actual
-- Selector de tiempo libre disponible
-- Botón "Obtener recomendación" con sugerencias personalizadas según estado/estrés/lugar
+  --amber:       #d4a04a;
+  --amber-light: #f5e0b3;
 
-### 📅 Calendario
-- Vista semanal de Lunes a Domingo
-- Navegación entre semanas (anterior / siguiente)
-- Agregar eventos con tipo, día, hora inicio/fin y descripción
-- Tipos: Clases, Academia, Inglés, Descanso, Sueño, Recordatorio, Alarma, Pausa activa
-- Código de colores por tipo de evento
-- Eliminar eventos con confirmación
-- Leyenda de categorías
+  --danger:      #e07070;
+  --danger-light:#fde8e8;
 
-### ⏱️ Temporizador Pomodoro
-- Modos: Estudio 25min / Descanso corto 5min / Descanso largo 15min / Personalizado
-- Timer personalizado (minutos de estudio y descanso configurables)
-- Círculo de progreso SVG animado
-- Botones: Iniciar / Pausar / Reiniciar / Saltar
-- Cambio automático entre fase estudio ↔ descanso
-- Contador de pomodoros completados (persiste en localStorage)
-- Estadísticas de sesión: minutos estudiados, descansos, pomodoros
+  --lavender:    #a89bc9;
+  --lavender-light: #e4dff5;
 
-### 🌬️ Relajación
-- 4 ejercicios de respiración guiada:
-  - Respiración cuadrada (4-4-4-4)
-  - Técnica 4-7-8
-  - Respiración profunda (5-6)
-  - Escaneo corporal (4-2-6-3)
-- Círculo visual animado que se expande/contrae según la fase
-- Cuenta regresiva por fase
-- Contador de ciclos completados
-- 4 pausas activas rápidas (cuello, hombros, ojos, espalda)
+  --radius-sm:   10px;
+  --radius-md:   18px;
+  --radius-lg:   28px;
+  --radius-pill: 999px;
 
-### 🎵 Música & Sonidos
-- **Sonidos ambientales** generados con Web Audio API:
-  - 🌧️ Lluvia, 🌊 Mar (con oleaje), 🌲 Bosque (con trinos), 📻 Ruido blanco, 🔥 Chimenea, ☕ Café
-  - Control de volumen individual por sonido
-  - Animación de ondas mientras suena
-- **Música de Minecraft** (síntesis de tonos suaves):
-  - Sweden, Wet Hands, Calm, Living Mice, Minecraft, Subwoofer Lullaby
-  - Mini reproductor con control de pausa/stop
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:   0 4px 20px rgba(0,0,0,0.10);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.12);
 
-### 🔔 Notificaciones
-- 8 notificaciones predefinidas configurables: estudiar, descanso, agua (x2), tarde, pausa activa, dormir, encuesta diaria
-- Hora personalizable por cada notificación
-- Toggle de activar/desactivar individual
-- Solicitud de permiso al navegador para notificaciones nativas
-- Verificador in-app (cada minuto) con toast automático
-- Historial de notificaciones recientes
+  --transition:  0.22s ease;
 
-### 📊 Progreso / Encuesta
-- Encuesta diaria con: estado emocional, nivel de estrés, qué ayudó, qué no ayudó, nota adicional
-- Guarda hasta 90 días de datos
-- Actualiza si ya existe encuesta del día
-- Gráfico de línea (Chart.js) de evolución del estrés — últimos 7 días
-- Insights automáticos: promedio, actividad más útil, alertas
+  --header-h:    60px;
+  --nav-h:       68px;
+  --content-top: calc(var(--header-h) + var(--nav-h));
+}
 
-### ⚙️ Perfil
-- Datos: nombre, edad, carrera/nivel, ciudad, avatar (8 opciones)
-- Actividades más efectivas (análisis de encuestas)
-- Historial emocional últimos 7 días
-- Estadísticas: días registrados, estrés promedio, pomodoros totales
-- Exportar todos los datos como JSON
-- Borrar todos los datos
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  overflow: hidden;
+}
 
----
+/* ── Scrollbar personalizado ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
 
-## 📂 Estructura del proyecto
+/* ── Utilidades ── */
+.hidden { display: none !important; }
 
-```
-index.html          → Estructura HTML + todas las pestañas
-css/
-  style.css         → Estilos completos (variables, componentes, responsive)
-js/
-  app.js            → Toda la lógica JavaScript
-README.md           → Esta documentación
-```
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
 
----
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-icon { font-size: 1.5rem; }
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--sage-dark);
+  letter-spacing: -0.5px;
+}
 
-## 🗄️ Almacenamiento de datos
+.header-time {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+}
 
-Toda la información se guarda en `localStorage` del navegador con prefijo `zs_`:
+/* ============================================================
+   NAVEGACIÓN POR PESTAÑAS
+   ============================================================ */
+.tab-nav {
+  position: fixed;
+  top: var(--header-h);
+  left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 4px;
+  padding: 0 12px;
+  z-index: 99;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
 
-| Clave               | Descripción                      |
-|---------------------|----------------------------------|
-| `zs_profile`        | Nombre, edad, carrera, ciudad, avatar |
-| `zs_surveyData`     | Array de encuestas diarias       |
-| `zs_calendarEvents` | Eventos del calendario           |
-| `zs_notifItems`     | Configuración de notificaciones  |
-| `zs_pomodoroCount`  | Total de pomodoros completados   |
-| `zs_notifHistory`   | Historial de notificaciones      |
-| `zs_today`          | Estado del día actual (inicio)   |
+.tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--text-2);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tab-btn i {
+  font-size: 1.1rem;
+  transition: transform var(--transition);
+}
+.tab-btn:hover {
+  background: var(--surface-2);
+  color: var(--sage-dark);
+}
+.tab-btn:hover i { transform: scale(1.15); }
+.tab-btn.active {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  font-weight: 700;
+}
+.tab-btn.active i { color: var(--sage-dark); }
 
----
+/* ============================================================
+   CONTENIDO PRINCIPAL
+   ============================================================ */
+.app-content {
+  position: fixed;
+  top: var(--content-top);
+  left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
 
-## 🎨 Paleta de colores
+.tab-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 20px 16px 24px;
+  animation: fadeIn 0.28s ease;
+}
+.tab-panel.active { display: block; }
 
-| Variable       | Color               | Uso                  |
-|----------------|---------------------|----------------------|
-| `--bg`         | `#f7f5f2` blanco cálido | Fondo principal  |
-| `--sage`       | `#7a9e7e` verde salvia | Primario, botones |
-| `--blue`       | `#7fa8c9` azul suave | Secundario, relajación |
-| `--amber`      | `#d4a04a` dorado    | Estrés medio         |
-| `--danger`     | `#e07070` rojo suave | Alertas, estrés alto |
-| `--lavender`   | `#a89bc9` lavanda   | Exhale en respiración |
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
----
+.panel-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-## 🚀 Funcionalidades pendientes / próximos pasos
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+}
 
-1. **Integración de audio real**: Cargar archivos MP3 reales para los sonidos y música de Minecraft
-2. **Sincronización en la nube**: Conectar con una API para sincronizar datos entre dispositivos
-3. **Modo offline (PWA)**: Service Worker para funcionamiento sin internet
-4. **Notificaciones push**: Backend para enviar notificaciones cuando la app esté cerrada
-5. **Temas de color**: Modo oscuro y otros esquemas de colores
-6. **Calendario en vista mensual**: Ampliar el calendario a vista mensual
-7. **Metas semanales**: Sistema de objetivos y logros
-8. **Técnicas de estudio adicionales**: Feynman, Mind Mapping, etc.
-9. **Integración con Google Calendar**: Importar/exportar eventos
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 14px rgba(90,125,96,0.35);
+  text-align: center;
+  justify-content: center;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90,125,96,0.45);
+}
+.btn-primary:active { transform: translateY(0); }
+.btn-primary.btn-large { width: 100%; padding: 14px 28px; font-size: 1rem; }
 
----
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--blue-light);
+  color: var(--blue-dark);
+  border: 1.5px solid var(--blue);
+  border-radius: var(--radius-pill);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-secondary:hover {
+  background: var(--blue);
+  color: #fff;
+  transform: translateY(-1px);
+}
 
-## 🌐 Ruta principal
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--text-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
 
-- **`/`** → `index.html` — Aplicación completa (SPA con pestañas)
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  border-radius: var(--radius-pill);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-danger:hover { background: var(--danger); color: #fff; }
 
----
+.btn-primary.small,
+.btn-secondary.small,
+.btn-ghost.small,
+.btn-danger.small {
+  padding: 7px 16px;
+  font-size: 0.82rem;
+}
 
-## 📦 Librerías externas (CDN)
+/* ============================================================
+   FORMULARIOS
+   ============================================================ */
+.pill-input, .pill-select, .pill-textarea {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
+  -webkit-appearance: none;
+}
+.pill-textarea { border-radius: var(--radius-md); resize: none; }
+.pill-input:focus, .pill-select:focus, .pill-textarea:focus {
+  border-color: var(--sage);
+  box-shadow: 0 0 0 3px rgba(122,158,126,0.18);
+}
 
-- [Nunito Font](https://fonts.google.com/specimen/Nunito) — Tipografía principal
-- [Font Awesome 6.4](https://fontawesome.com/) — Iconos
-- [Chart.js](https://www.chartjs.org/) — Gráficos de progreso
-- Web Audio API — Sonidos ambientales y música (nativa del navegador)
+.form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.form-group label { font-size: 0.83rem; font-weight: 700; color: var(--text-2); }
+.form-row { display: flex; gap: 12px; }
+
+/* ============================================================
+   PESTAÑA: INICIO
+   ============================================================ */
+.welcome-card { display: flex; flex-direction: column; gap: 18px; }
+
+.welcome-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.welcome-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+.welcome-sub { font-size: 0.95rem; color: var(--text-2); margin-top: 4px; }
+
+.weather-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 13px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.section-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+/* Sentimientos */
+.feeling-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.feeling-btn {
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+.feeling-btn:hover {
+  border-color: var(--sage);
+  background: var(--sage-light);
+  transform: translateY(-2px);
+}
+.feeling-btn.selected {
+  border-color: var(--sage-dark);
+  background: var(--sage);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(122,158,126,0.3);
+}
+.feeling-grid.small .feeling-btn { padding: 8px 6px; font-size: 0.78rem; }
+
+/* Estrés slider */
+.stress-section { display: flex; flex-direction: column; gap: 8px; }
+.stress-value {
+  display: inline-block;
+  background: var(--amber-light);
+  color: var(--amber);
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+}
+
+.slider-track { display: flex; flex-direction: column; gap: 4px; }
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+.stress-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--sage-light), var(--amber-light));
+  outline: none;
+  cursor: pointer;
+}
+.stress-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sage);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(122,158,126,0.4);
+  transition: transform var(--transition);
+}
+.stress-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* Context row */
+.context-row { display: flex; gap: 12px; }
+.context-field { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.context-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.context-label i { color: var(--sage); }
+
+/* Recomendación */
+.recommendation-card {
+  border-left: 4px solid var(--sage);
+  background: linear-gradient(135deg, #f9fdf9 0%, #eef5ef 100%);
+}
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.rec-icon { font-size: 1.8rem; }
+.rec-header h3 { font-size: 1rem; font-weight: 700; color: var(--sage-dark); }
+.rec-body { font-size: 0.92rem; color: var(--text); line-height: 1.6; }
+.rec-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ============================================================
+   PESTAÑA: CALENDARIO
+   ============================================================ */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel-header h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-header h2 i { color: var(--sage); }
+
+.panel-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.panel-title i { color: var(--sage); }
+
+/* Navegación de semanas */
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--surface);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border);
+}
+.week-nav-btn {
+  width: 34px; height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+.week-nav-btn:hover { background: var(--sage-light); color: var(--sage-dark); }
+.week-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-2);
+  min-width: 160px;
+  text-align: center;
+}
+
+/* Grid del calendario */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.day-column {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  overflow: hidden;
+  min-height: 160px;
+}
+.day-header {
+  padding: 8px 6px;
+  text-align: center;
+  background: var(--surface-2);
+  border-bottom: 1.5px solid var(--border);
+}
+.day-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.day-date {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 2px;
+}
+.day-column.today .day-header { background: var(--sage-light); }
+.day-column.today .day-date { color: var(--sage-dark); }
+
+.day-events {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.event-pill {
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition);
+  position: relative;
+}
+.event-pill:hover { opacity: 0.75; }
+.event-pill .ep-time { font-size: 0.60rem; opacity: 0.8; display: block; }
+.event-pill .ep-name { display: block; line-height: 1.2; }
+
+/* Colores por tipo de evento */
+.event-clases     { background: #dceeff; color: #3478c9; }
+.event-academia   { background: #e8d9f5; color: #7b4ea3; }
+.event-ingles     { background: #fff0d9; color: #b87820; }
+.event-descanso   { background: #d9f5e8; color: #2a8a5e; }
+.event-sueno      { background: #e0d9f5; color: #5a3ea3; }
+.event-recordatorio { background: #fde8e8; color: #c04040; }
+.event-alarma     { background: #fde8c0; color: #b87820; }
+.event-pausa      { background: #d9f5f0; color: #2a8a7e; }
+
+/* Leyenda */
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border);
+  justify-content: center;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-clases   { background: #3478c9; }
+.dot-academia { background: #7b4ea3; }
+.dot-ingles   { background: #b87820; }
+.dot-descanso { background: #2a8a5e; }
+.dot-sueno    { background: #5a3ea3; }
+.dot-alarma   { background: #b87820; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58,53,48,0.45);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.modal-card {
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: var(--sage-dark);
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* ============================================================
+   PESTAÑA: TEMPORIZADOR
+   ============================================================ */
+.timer-panel { align-items: center; text-align: center; }
+
+.mode-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mode-btn {
+  padding: 9px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.mode-btn:hover { background: var(--sage-light); border-color: var(--sage); color: var(--sage-dark); }
+.mode-btn.active {
+  background: var(--sage);
+  border-color: var(--sage-dark);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(122,158,126,0.3);
+}
+
+.custom-timer {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  border: 1.5px solid var(--border);
+  width: 100%;
+  max-width: 320px;
+  text-align: left;
+}
+
+/* Círculo del temporizador */
+.timer-circle-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 8px auto;
+}
+.timer-svg { width: 100%; height: 100%; }
+.timer-bg-circle {
+  fill: none;
+  stroke: var(--surface-2);
+  stroke-width: 12;
+}
+.timer-progress-circle {
+  fill: none;
+  stroke: var(--sage);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+}
+.timer-text-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.timer-display {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.timer-mode-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pomodoro-count {
+  font-size: 0.78rem;
+  color: var(--amber);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Controles del temporizador */
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+.timer-btn {
+  border-radius: 50% !important;
+  aspect-ratio: 1;
+}
+.timer-btn.large {
+  width: 64px;
+  height: 64px;
+  font-size: 1.3rem;
+}
+.timer-btn.btn-ghost {
+  width: 46px;
+  height: 46px;
+  justify-content: center;
+}
+
+/* Estadísticas del timer */
+.timer-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 14px 20px;
+  width: 100%;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--sage-dark);
+}
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+/* ============================================================
+   PESTAÑA: RELAJACIÓN
+   ============================================================ */
+.relax-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.relax-choice {
+  padding: 12px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.relax-choice:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue-dark); }
+.relax-choice.active {
+  background: var(--blue-light);
+  border-color: var(--blue-dark);
+  color: var(--blue-dark);
+  box-shadow: 0 3px 10px rgba(127,168,201,0.25);
+}
+
+.exercise-desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  padding: 14px 18px;
+  border-left: 3px solid var(--blue);
+  background: var(--blue-light);
+  border-radius: var(--radius-md) !important;
+  line-height: 1.6;
+}
+
+/* Círculo de respiración */
+.breath-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.breath-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--blue-light) 0%, var(--blue) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  transition: transform 1s ease, background 0.5s ease;
+  box-shadow: 0 8px 28px rgba(127,168,201,0.35);
+}
+.breath-circle.inhale {
+  transform: scale(1.3);
+  background: radial-gradient(circle, var(--sage-light) 0%, var(--sage) 100%);
+}
+.breath-circle.hold {
+  background: radial-gradient(circle, var(--amber-light) 0%, var(--amber) 100%);
+}
+.breath-circle.exhale {
+  transform: scale(0.85);
+  background: radial-gradient(circle, var(--lavender-light) 0%, var(--lavender) 100%);
+}
+
+.breath-instruction {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-2);
+  text-align: center;
+}
+.breath-countdown {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--blue-dark);
+  min-height: 44px;
+}
+
+.relax-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.cycles-info {
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--text);
+  font-weight: 600;
+}
+.cycles-sub { font-size: 0.78rem; color: var(--text-3); margin-top: 4px; }
+
+/* Pausas activas */
+.active-pauses h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.active-pauses h4 i { color: var(--sage); }
+.pauses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.pause-btn {
+  padding: 10px 6px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+.pause-btn:hover { background: var(--sage-light); border-color: var(--sage); color: var(--sage-dark); }
+.pause-instruction {
+  background: var(--sage-light);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sage-dark);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PESTAÑA: MÚSICA
+   ============================================================ */
+.music-section { display: flex; flex-direction: column; gap: 12px; }
+.music-category {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.badge-mc {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+}
+
+/* Sonidos naturales */
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.sound-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.sound-card:hover { border-color: var(--blue); background: var(--blue-light); transform: translateY(-2px); }
+.sound-card.playing {
+  border-color: var(--sage-dark);
+  background: var(--sage-light);
+  box-shadow: 0 4px 14px rgba(122,158,126,0.3);
+}
+.sound-icon { font-size: 1.8rem; }
+.sound-name { font-size: 0.8rem; font-weight: 700; color: var(--text-2); }
+.sound-wave {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 18px;
+}
+.sound-card.playing .sound-wave { display: flex !important; }
+.wave-bar {
+  width: 3px;
+  background: var(--sage);
+  border-radius: 2px;
+  animation: wave 0.6s ease-in-out infinite alternate;
+}
+.wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { animation-delay: 0.15s; }
+@keyframes wave {
+  from { height: 4px; }
+  to   { height: 14px; }
+}
+.vol-slider {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sage-light);
+  cursor: pointer;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--sage);
+  cursor: pointer;
+}
+.volume-wrap { display: flex; align-items: center; justify-content: center; }
+
+/* Pistas de Minecraft */
+.mc-tracks { display: flex; flex-direction: column; gap: 8px; }
+.track-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.track-card:hover { border-color: var(--sage); background: var(--sage-light); }
+.track-card.playing { border-color: var(--sage-dark); background: var(--sage-light); }
+.track-art { font-size: 1.5rem; }
+.track-info { flex: 1; }
+.track-name { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+.track-artist { font-size: 0.75rem; color: var(--text-2); font-weight: 500; }
+.track-play-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--sage);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.track-play-btn:hover { background: var(--sage-dark); transform: scale(1.1); }
+
+/* Mini reproductor */
+.mini-player {
+  position: sticky;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--blue-light) 100%);
+  border-color: var(--sage);
+}
+.player-info { display: flex; align-items: center; gap: 12px; }
+.player-icon { font-size: 1.5rem; }
+.player-title { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+.player-sub { font-size: 0.75rem; color: var(--text-2); }
+.player-btn {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--danger-light);
+  color: var(--danger);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-btn:hover { background: var(--danger); color: #fff; }
+.player-controls { display: flex; gap: 8px; }
+
+.music-note {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  text-align: center;
+  padding: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PESTAÑA: NOTIFICACIONES
+   ============================================================ */
+.notif-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--blue-light);
+  border-color: var(--blue);
+}
+.notif-perm-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notif-shield {
+  font-size: 1.5rem;
+  color: var(--blue-dark);
+}
+.notif-perm-info strong { font-size: 0.9rem; color: var(--text); display: block; }
+.notif-perm-info p { font-size: 0.78rem; color: var(--text-2); margin-top: 2px; }
+
+.notif-list { display: flex; flex-direction: column; gap: 10px; }
+.notif-item {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.notif-item-icon { font-size: 1.4rem; flex-shrink: 0; }
+.notif-item-info { flex: 1; }
+.notif-item-name { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+.notif-item-time { font-size: 0.78rem; color: var(--text-2); margin-top: 2px; }
+.notif-item-time input[type="time"] {
+  border: none;
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+  padding: 3px 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Toggle switch */
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform var(--transition);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--sage); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+.notif-history h4 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.notif-history h4 i { color: var(--blue); }
+.notif-history-list { display: flex; flex-direction: column; gap: 6px; max-height: 140px; overflow-y: auto; }
+.notif-history-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  padding: 6px 10px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+}
+.notif-history-item .nh-time { font-weight: 700; color: var(--text); }
+.empty-msg { font-size: 0.82rem; color: var(--text-3); text-align: center; padding: 8px; }
+
+/* ============================================================
+   PESTAÑA: PROGRESO / ENCUESTA
+   ============================================================ */
+.survey-card { display: flex; flex-direction: column; gap: 16px; }
+.survey-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.survey-card h3 i { color: var(--sage); }
+.survey-date { font-size: 0.8rem; color: var(--text-3); font-weight: 600; margin-top: -8px; }
+.survey-field { display: flex; flex-direction: column; gap: 8px; }
+.survey-field label { font-size: 0.85rem; font-weight: 700; color: var(--text-2); }
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  padding: 7px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+.check-item:hover { background: var(--sage-light); border-color: var(--sage); }
+.check-item input { accent-color: var(--sage); width: 14px; height: 14px; }
+
+/* Gráfico */
+.chart-card { display: flex; flex-direction: column; gap: 12px; }
+.chart-card h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-card h3 i { color: var(--blue); }
+.chart-insights {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.insight-pill {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+/* ============================================================
+   PESTAÑA: PERFIL
+   ============================================================ */
+.profile-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  border: 3px solid var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  cursor: pointer;
+}
+.avatar-picker {
+  display: none;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  max-width: 180px;
+  justify-content: center;
+}
+.avatar-picker.open { display: flex; }
+.avatar-picker span {
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background var(--transition);
+}
+.avatar-picker span:hover { background: var(--sage-light); }
+.profile-main-info { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+.helped-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.helped-tag {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.emotion-history { display: flex; flex-direction: column; gap: 6px; max-height: 160px; overflow-y: auto; }
+.emotion-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+}
+.emotion-entry .ee-date { font-size: 0.75rem; color: var(--text-3); font-weight: 600; }
+.emotion-entry .ee-emoji { font-size: 1.1rem; }
+.emotion-entry .ee-stress {
+  background: var(--amber-light);
+  color: var(--amber);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.stat-box { display: flex; flex-direction: column; gap: 4px; }
+.stat-big { font-size: 2rem; font-weight: 800; color: var(--sage-dark); }
+.stat-desc { font-size: 0.72rem; color: var(--text-2); font-weight: 600; }
+
+.danger-zone h4 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-2);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.danger-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.section-sub { font-size: 0.78rem; color: var(--text-3); margin-bottom: 8px; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 700;
+  z-index: 500;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.toast.success { background: var(--sage-dark); }
+.toast.error   { background: var(--danger); }
+.toast.info    { background: var(--blue-dark); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .tab-btn span { display: none; }
+  .tab-btn { padding: 8px 12px; }
+  .tab-btn i { font-size: 1.2rem; }
+  
+  .feeling-grid { grid-template-columns: repeat(2, 1fr); }
+  .context-row { flex-direction: column; }
+  .calendar-grid { grid-template-columns: repeat(4, 1fr); overflow-x: auto; }
+  .sound-grid { grid-template-columns: repeat(2, 1fr); }
+  .pauses-grid { grid-template-columns: repeat(2, 1fr); }
+  .checkbox-grid { grid-template-columns: 1fr; }
+  .profile-header { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 400px) {
+  .welcome-title { font-size: 1.2rem; }
+  .timer-display { font-size: 2.2rem; }
+  .mode-selector { grid-template-columns: repeat(2, 1fr); }
+}
